@@ -99,7 +99,8 @@ export function createApp({ env = process.env, telegramFetch = fetch } = {}) {
     }
   });
 
-  app.use((err, _req, res, _next) => {
+  app.use((err, _req, res, next) => {
+    void next;
     if (err?.status === 413) return res.status(413).json({ error: "Request too large" });
     return res.status(400).json({ error: "Malformed request" });
   });
