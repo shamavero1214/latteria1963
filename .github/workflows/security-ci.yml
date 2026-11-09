@@ -1,0 +1,24 @@
+name: Security and build checks
+
+on:
+  push:
+    branches:
+      - security/remove-exposed-telegram-token-2026-11-09
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
